@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/FalloutTTW">
+        <file alias="splash">splash.png</file>
+    </qresource>
+</RCC>

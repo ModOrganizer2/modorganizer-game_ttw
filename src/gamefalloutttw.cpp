@@ -73,7 +73,8 @@ QString GameFalloutTTW::author() const
 
 QString GameFalloutTTW::description() const
 {
-  return tr("Adds support for the game Fallout TTW");
+  return tr("Adds support for the game Fallout TTW.\n"
+            "Splash by %1").arg("Roy Batty");
 }
 
 MOBase::VersionInfo GameFalloutTTW::version() const
@@ -94,8 +95,8 @@ QList<PluginSetting> GameFalloutTTW::settings() const
 void GameFalloutTTW::initializeProfile(const QDir &path, ProfileSettings settings) const
 {
   if (settings.testFlag(IPluginGame::MODS)) {
-    copyToProfile(localAppFolder() + "/FalloutNV", path, "plugins.txt");
-    copyToProfile(localAppFolder() + "/FalloutNV", path, "loadorder.txt");
+    copyToProfile(localAppFolder() + "/FalloutTTW", path, "plugins.txt");
+    copyToProfile(localAppFolder() + "/FalloutTTW", path, "loadorder.txt");
   }
 
   if (settings.testFlag(IPluginGame::CONFIGURATION)) {
@@ -132,8 +133,8 @@ QStringList GameFalloutTTW::primaryPlugins() const
   return { "falloutnv.esm", "deadmoney.esm", "honesthearts.esm",
            "oldworldblues.esm", "lonesomeroad.esm", "gunrunnersarsenal.esm",
            "fallout3.esm", "anchorage.esm", "thepitt.esm", "brokensteel.esm",
-		   "pointlookout.esm", "zeta.esm", "caravanpack.esm", "classicpack.esm",
-		   "mercenarypack.esm", "tribalpack.esm", "taleoftwowastelands.esm" };
+		       "pointlookout.esm", "zeta.esm", "caravanpack.esm", "classicpack.esm",
+		       "mercenarypack.esm", "tribalpack.esm", "taleoftwowastelands.esm" };
 }
 
 QString GameFalloutTTW::gameShortName() const
@@ -155,10 +156,10 @@ QStringList GameFalloutTTW::DLCPlugins() const
 {
   return { "FalloutNV.esm", "DeadMoney.esm", "HonestHearts.esm",
            "OldWorldBlues.esm", "LonesomeRoad.esm", "GunRunnersArsenal.esm",
-		   "CaravanPack.esm", "ClassicPack.esm", "MercenaryPack.esm",
-		   "TribalPack.esm", "Fallout3.esm", "Anchorage.esm",
-		   "ThePitt.esm", "BrokenSteel.esm", "PointLookout.esm",
-		   "Zeta.esm", "TaleOfTwoWastelands.esm"};
+		       "CaravanPack.esm", "ClassicPack.esm", "MercenaryPack.esm",
+	         "TribalPack.esm", "Fallout3.esm", "Anchorage.esm",
+		       "ThePitt.esm", "BrokenSteel.esm", "PointLookout.esm",
+		       "Zeta.esm", "TaleOfTwoWastelands.esm"};
 }
 
 int GameFalloutTTW::nexusModOrganizerID() const
