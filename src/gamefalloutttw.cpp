@@ -65,12 +65,8 @@ QList<ExecutableInfo> GameFalloutTTW::executables() const
   return QList<ExecutableInfo>()
       << ExecutableInfo("NVSE", findInGameFolder(feature<ScriptExtender>()->loaderName()))
       << ExecutableInfo("Tale of Two Wastelands", findInGameFolder(binaryName()))
-      << ExecutableInfo("Fallout Mod Manager", findInGameFolder("fomm/fomm.exe"))
-      << ExecutableInfo("Construction Kit", findInGameFolder("geck.exe"))
       << ExecutableInfo("Fallout Launcher", findInGameFolder(getLauncherName()))
-      << ExecutableInfo("BOSS", findInGameFolder("BOSS/BOSS.exe"))
-      << ExecutableInfo("LOOT", QFileInfo(getLootPath())).withArgument("--game=\"FalloutNV\"")
-         ;
+      << ExecutableInfo("Construction Kit", findInGameFolder("geck.exe"));
 }
 
 QList<ExecutableForcedLoadSetting> GameFalloutTTW::executableForcedLoads() const
@@ -124,7 +120,6 @@ void GameFalloutTTW::initializeProfile(const QDir &path, ProfileSettings setting
 
     copyToProfile(myGamesPath(), path, "falloutprefs.ini");
     copyToProfile(myGamesPath(), path, "falloutcustom.ini");
-    copyToProfile(myGamesPath(), path, "custom.ini");
     copyToProfile(myGamesPath(), path, "GECKCustom.ini");
     copyToProfile(myGamesPath(), path, "GECKPrefs.ini");
   }
@@ -169,7 +164,8 @@ QStringList GameFalloutTTW::primaryPlugins() const
            "classicpack.esm",
            "mercenarypack.esm",
            "tribalpack.esm",
-           "taleoftwowastelands.esm" };
+           "taleoftwowastelands.esm"
+           "yupttw.esm" };
 }
 
 QString GameFalloutTTW::binaryName() const
@@ -199,7 +195,7 @@ QString GameFalloutTTW::gameNexusName() const
 
 QStringList GameFalloutTTW::iniFiles() const
 {
-  return { "fallout.ini", "falloutprefs.ini", "falloutcustom.ini", "custom.ini", "GECKCustom.ini", "GECKPrefs.ini" };
+  return { "fallout.ini", "falloutprefs.ini", "falloutcustom.ini", "GECKCustom.ini", "GECKPrefs.ini" };
 }
 
 QStringList GameFalloutTTW::DLCPlugins() const
