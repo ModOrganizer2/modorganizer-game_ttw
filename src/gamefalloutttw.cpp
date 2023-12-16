@@ -27,7 +27,9 @@
 
 using namespace MOBase;
 
-GameFalloutTTW::GameFalloutTTW() {}
+GameFalloutTTW::GameFalloutTTW()
+{
+}
 
 bool GameFalloutTTW::init(IOrganizer* moInfo)
 {
@@ -37,11 +39,9 @@ bool GameFalloutTTW::init(IOrganizer* moInfo)
 
   registerFeature<ScriptExtender>(new FalloutTTWScriptExtender(this));
   registerFeature<DataArchives>(new FalloutTTWDataArchives(myGamesPath()));
-  registerFeature<BSAInvalidation>(
-      new FalloutTTWBSAInvalidation(feature<DataArchives>(), this));
+  registerFeature<BSAInvalidation>(new FalloutTTWBSAInvalidation(feature<DataArchives>(), this));
   registerFeature<SaveGameInfo>(new GamebryoSaveGameInfo(this));
-  registerFeature<LocalSavegames>(
-      new GamebryoLocalSavegames(myGamesPath(), "fallout.ini"));
+  registerFeature<LocalSavegames>(new GamebryoLocalSavegames(myGamesPath(), "Fallout.ini"));
   registerFeature<ModDataChecker>(new FalloutTTWModDataChecker(this));
   registerFeature<ModDataContent>(new FalloutTTWModDataContent(this));
   registerFeature<GamePlugins>(new GamebryoGamePlugins(moInfo));
@@ -89,8 +89,7 @@ QString GameFalloutTTW::identifyGamePath() const
     result = parseEpicGamesLocation({"5daeb974a22a435988892319b3a4f476"});
     if (QFileInfo(result).isDir()) {
       QDir startPath = QDir(result);
-      auto subDirs   = startPath.entryList({"Fallout New Vegas*"},
-                                           QDir::Dirs | QDir::NoDotAndDotDot);
+      auto subDirs   = startPath.entryList({"Fallout New Vegas*"}, QDir::Dirs | QDir::NoDotAndDotDot);
       if (!subDirs.isEmpty())
         result += "/" + subDirs.first();
     }
@@ -107,7 +106,7 @@ void GameFalloutTTW::setGamePath(const QString& path)
   registerFeature<BSAInvalidation>(
       new FalloutTTWBSAInvalidation(feature<DataArchives>(), this));
   registerFeature<LocalSavegames>(
-      new GamebryoLocalSavegames(myGamesPath(), "fallout.ini"));
+      new GamebryoLocalSavegames(myGamesPath(), "Fallout.ini"));
 }
 
 QDir GameFalloutTTW::savesDirectory() const
@@ -150,15 +149,11 @@ QList<ExecutableInfo> GameFalloutTTW::executables() const
   ExecutableInfo game("Tale of Two Wastelands", findInGameFolder(binaryName()));
   ExecutableInfo launcher("Fallout Launcher", findInGameFolder(getLauncherName()));
   QList<ExecutableInfo> extraExecutables =
-      QList<ExecutableInfo>()
-      << ExecutableInfo("Fallout Mod Manager", findInGameFolder("fomm/fomm.exe"))
-      << ExecutableInfo("Construction Kit", findInGameFolder("geck.exe"))
-      << ExecutableInfo("BOSS", findInGameFolder("BOSS/BOSS.exe"))
-      << ExecutableInfo("LOOT", QFileInfo(getLootPath()))
-             .withArgument("--game=\"FalloutNV\"");
+    QList<ExecutableInfo>()
+    << ExecutableInfo("Construction Kit", findInGameFolder("geck.exe"))
+    << ExecutableInfo("LOOT", QFileInfo(getLootPath())).withArgument("--game=\"FalloutNV\"");
   if (selectedVariant() != "Epic Games") {
-    extraExecutables.prepend(ExecutableInfo(
-        "NVSE", findInGameFolder(feature<ScriptExtender>()->loaderName())));
+    extraExecutables.prepend(ExecutableInfo("NVSE", findInGameFolder(feature<ScriptExtender>()->loaderName())));
   } else {
     game.withArgument("-EpicPortal");
     launcher.withArgument("-EpicPortal");
@@ -195,7 +190,7 @@ QString GameFalloutTTW::description() const
 
 MOBase::VersionInfo GameFalloutTTW::version() const
 {
-  return VersionInfo(1, 6, 0, VersionInfo::RELEASE_FINAL);
+  return VersionInfo(1, 6, 1, VersionInfo::RELEASE_FINAL);
 }
 
 QList<PluginSetting> GameFalloutTTW::settings() const
@@ -210,17 +205,15 @@ void GameFalloutTTW::initializeProfile(const QDir& path, ProfileSettings setting
   }
 
   if (settings.testFlag(IPluginGame::CONFIGURATION)) {
-    if (settings.testFlag(IPluginGame::PREFER_DEFAULTS) ||
-        !QFileInfo(myGamesPath() + "/fallout.ini").exists()) {
-      copyToProfile(gameDirectory().absolutePath(), path, "fallout_default.ini",
-                    "fallout.ini");
-    } else {
-      copyToProfile(myGamesPath(), path, "fallout.ini");
+    if (settings.testFlag(IPluginGame::PREFER_DEFAULTS) || !QFileInfo(myGamesPath() + "/Fallout.ini").exists()) {
+      copyToProfile(gameDirectory().absolutePath(), path, "Fallout_Default.ini", "Fallout.ini");
+    }
+    else {
+      copyToProfile(myGamesPath(), path, "Fallout.ini");
     }
 
-    copyToProfile(myGamesPath(), path, "falloutprefs.ini");
-    copyToProfile(myGamesPath(), path, "falloutcustom.ini");
-    copyToProfile(myGamesPath(), path, "custom.ini");
+    copyToProfile(myGamesPath(), path, "FalloutPrefs.ini");
+    copyToProfile(myGamesPath(), path, "FalloutCustom.ini");
     copyToProfile(myGamesPath(), path, "GECKCustom.ini");
     copyToProfile(myGamesPath(), path, "GECKPrefs.ini");
   }
@@ -249,12 +242,26 @@ QString GameFalloutTTW::steamAPPId() const
 
 QStringList GameFalloutTTW::primaryPlugins() const
 {
-  return {"falloutnv.esm",     "deadmoney.esm",          "honesthearts.esm",
-          "oldworldblues.esm", "lonesomeroad.esm",       "gunrunnersarsenal.esm",
-          "fallout3.esm",      "anchorage.esm",          "thepitt.esm",
-          "brokensteel.esm",   "pointlookout.esm",       "zeta.esm",
-          "caravanpack.esm",   "classicpack.esm",        "mercenarypack.esm",
-          "tribalpack.esm",    "taleoftwowastelands.esm"};
+  return {
+    "falloutnv.esm",
+    "deadmoney.esm",
+    "honesthearts.esm",
+    "oldworldblues.esm",
+    "lonesomeroad.esm",
+    "gunrunnersarsenal.esm",
+    "fallout3.esm",
+    "anchorage.esm",
+    "thepitt.esm",
+    "brokensteel.esm",
+    "pointlookout.esm",
+    "zeta.esm",
+    "caravanpack.esm",
+    "classicpack.esm",
+    "mercenarypack.esm",
+    "tribalpack.esm",
+    "taleoftwowastelands.esm",
+    "yupttw.esm"
+  };
 }
 
 QStringList GameFalloutTTW::gameVariants() const
@@ -289,8 +296,7 @@ QString GameFalloutTTW::gameNexusName() const
 
 QStringList GameFalloutTTW::iniFiles() const
 {
-  return {"fallout.ini", "falloutprefs.ini", "falloutcustom.ini",
-          "custom.ini",  "GECKCustom.ini",   "GECKPrefs.ini"};
+  return {"Fallout.ini", "FalloutPrefs.ini", "FalloutCustom.ini",  "GECKCustom.ini",   "GECKPrefs.ini"};
 }
 
 QStringList GameFalloutTTW::DLCPlugins() const
@@ -328,12 +334,10 @@ MappingType GameFalloutTTW::mappings() const
   MappingType result;
 
   for (const QString& profileFile : {"plugins.txt", "loadorder.txt"}) {
-    result.push_back({m_Organizer->profilePath() + "/" + profileFile,
-                      localAppFolder() + "/FalloutNV/" + profileFile, false});
+    result.push_back({m_Organizer->profilePath() + "/" + profileFile, localAppFolder() + "/FalloutNV/" + profileFile, false});
     if (selectedVariant() == "Epic Games") {
       result.push_back(
-          {m_Organizer->profilePath() + "/" + profileFile,
-           localAppFolder() + "/" + gameDirectoryName() + "/" + profileFile, false});
+        {m_Organizer->profilePath() + "/" + profileFile, localAppFolder() + "/" + gameDirectoryName() + "/" + profileFile, false});
     }
   }
   return result;
