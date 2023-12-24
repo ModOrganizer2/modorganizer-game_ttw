@@ -14,7 +14,7 @@ protected:
       "fonts", "interface", "menus", "meshes", "music", "scripts", "shaders",
       "sound", "strings", "textures", "trees", "video", "facegen", "materials",
       "nvse", "distantlod", "asi", "Tools", "MCM", "distantland", "mits",
-      "dllplugins", "CalienteTools", "shadersfx", "config"
+      "dllplugins", "CalienteTools", "shadersfx", "config", "Keywords", "BaseObjectSwapper"
     };
     return result;
   }
