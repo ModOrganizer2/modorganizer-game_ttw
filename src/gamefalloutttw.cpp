@@ -127,7 +127,7 @@ bool GameFalloutTTW::isInstalled() const
 
 QString GameFalloutTTW::gameName() const
 {
-  return "TTW";
+    return "Tale of Two Wastelands";
 }
 
 QString GameFalloutTTW::gameDirectoryName() const
@@ -198,7 +198,11 @@ MOBase::VersionInfo GameFalloutTTW::version() const
 
 QList<PluginSetting> GameFalloutTTW::settings() const
 {
-  return QList<PluginSetting>();
+    return QList<PluginSetting>()
+           << PluginSetting("enable_loot_sorting",
+                            tr("While not recommended by the TTW modding community, "
+                               "enables LOOT sorting"),
+                            false);
 }
 
 void GameFalloutTTW::initializeProfile(const QDir& path, ProfileSettings settings) const
@@ -266,7 +270,7 @@ QString GameFalloutTTW::binaryName() const
 
 QString GameFalloutTTW::gameShortName() const
 {
-  return "TTW";
+    return "FalloutNV";
 }
 
 QStringList GameFalloutTTW::primarySources() const
@@ -281,7 +285,7 @@ QStringList GameFalloutTTW::validShortNames() const
 
 QString GameFalloutTTW::gameNexusName() const
 {
-  return "";
+    return "newvegas";
 }
 
 QStringList GameFalloutTTW::iniFiles() const
@@ -297,7 +301,9 @@ QStringList GameFalloutTTW::DLCPlugins() const
 
 MOBase::IPluginGame::SortMechanism GameFalloutTTW::sortMechanism() const
 {
-  return SortMechanism::NONE;
+    if (m_Organizer->pluginSetting(name(), "enable_loot_sorting").toBool())
+        return IPluginGame::SortMechanism::LOOT;
+    return IPluginGame::SortMechanism::NONE;
 }
 
 int GameFalloutTTW::nexusModOrganizerID() const
