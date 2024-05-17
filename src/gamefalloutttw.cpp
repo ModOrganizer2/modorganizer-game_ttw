@@ -285,7 +285,7 @@ QStringList GameFalloutTTW::validShortNames() const
 
 QString GameFalloutTTW::gameNexusName() const
 {
-    return "newvegas";
+    return "";
 }
 
 QStringList GameFalloutTTW::iniFiles() const
