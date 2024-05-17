@@ -285,7 +285,7 @@ QStringList GameFalloutTTW::validShortNames() const
 
 QString GameFalloutTTW::gameNexusName() const
 {
-    return "";
+  return "";
 }
 
 QStringList GameFalloutTTW::iniFiles() const
