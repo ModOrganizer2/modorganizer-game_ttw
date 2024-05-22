@@ -127,7 +127,12 @@ bool GameFalloutTTW::isInstalled() const
 
 QString GameFalloutTTW::gameName() const
 {
-    return "Tale of Two Wastelands";
+  return "TTW";
+}
+
+QString GameFalloutTTW::displayGameName() const
+{
+    return "Fallout Tale of Two Wastelands";
 }
 
 QString GameFalloutTTW::gameDirectoryName() const
@@ -270,7 +275,7 @@ QString GameFalloutTTW::binaryName() const
 
 QString GameFalloutTTW::gameShortName() const
 {
-    return "FalloutNV";
+  return "TTW";
 }
 
 QStringList GameFalloutTTW::primarySources() const
@@ -301,9 +306,14 @@ QStringList GameFalloutTTW::DLCPlugins() const
 
 MOBase::IPluginGame::SortMechanism GameFalloutTTW::sortMechanism() const
 {
-    if (m_Organizer->pluginSetting(name(), "enable_loot_sorting").toBool())
-        return IPluginGame::SortMechanism::LOOT;
-    return IPluginGame::SortMechanism::NONE;
+   if (m_Organizer->pluginSetting(name(), "enable_loot_sorting").toBool())
+      return IPluginGame::SortMechanism::LOOT;
+   return IPluginGame::SortMechanism::NONE;
+}
+
+QString GameFalloutTTW::lootGameName() const
+{
+    return "FalloutNV";
 }
 
 int GameFalloutTTW::nexusModOrganizerID() const
