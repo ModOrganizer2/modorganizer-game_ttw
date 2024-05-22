@@ -132,7 +132,7 @@ QString GameFalloutTTW::gameName() const
 
 QString GameFalloutTTW::displayGameName() const
 {
-    return "Fallout Tale of Two Wastelands";
+    return "Tale of Two Wastelands";
 }
 
 QString GameFalloutTTW::gameDirectoryName() const
