@@ -249,7 +249,14 @@ GameFalloutTTW::makeSaveGame(QString filePath) const
 
 QString GameFalloutTTW::steamAPPId() const
 {
-  return "22380";
+  if (selectedVariant() == "Steam") {
+    if (m_GamePath.endsWith("enplczru")) {
+      return "22490";
+    } else {
+      return "22380";
+    }
+  }
+  return QString();
 }
 
 QStringList GameFalloutTTW::primaryPlugins() const
